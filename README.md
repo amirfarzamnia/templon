@@ -2,6 +2,12 @@
 
 Advanced template compiler with deep variable resolution, object processing, and strict validation.
 
+[![npm version](https://badge.fury.io/js/templon.svg)](https://www.npmjs.com/package/templon)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![GitHub issues](https://img.shields.io/github/issues/amirfarzamnia/templon.svg)](https://github.com/amirfarzamnia/templon/issues)
+[![GitHub stars](https://img.shields.io/github/stars/amirfarzamnia/templon.svg)](https://github.com/amirfarzamnia/templon/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/amirfarzamnia/templon.svg)](https://github.com/amirfarzamnia/templon/forks)
+
 ## Features
 
 - Deep variable resolution using dot notation

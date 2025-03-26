@@ -59,4 +59,4 @@ compileTemplate(
 
 ## Supported browsers
 
-![Supported browsers](https://ci.testling.com/amirfarzamnia/templon.png)
+[![Supported browsers](https://ci.testling.com/amirfarzamnia/templon.png)](https://ci.testling.com/amirfarzamnia/templon)

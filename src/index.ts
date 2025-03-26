@@ -25,6 +25,8 @@ export function compileTemplate(
     strict = false,
     preserveUndefined = false,
     autoStringifyObjects = true,
+    parseStrings = true,
+    parseBinInts = false,
     resolver,
     stringTransform = (s) => s,
   } = options;
@@ -89,9 +91,17 @@ export function compileTemplate(
 
     result = stringTransform(restoreEscapeSequences(result));
 
-    if (options.parseStrings) {
+    if (parseStrings) {
       try {
-        result = JSON.parse(result);
+        const parsed = JSON.parse(result);
+
+        if (
+          typeof parsed !== "number" ||
+          Number.isSafeInteger(parsed) ||
+          parseBinInts
+        ) {
+          result = parsed;
+        }
       } catch {}
     }
 

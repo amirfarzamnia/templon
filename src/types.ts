@@ -32,6 +32,13 @@ export interface CompileTemplateOptions {
   parseStrings?: boolean;
 
   /**
+   * Automatically parse BigInts in output
+   *
+   * @default false
+   */
+  parseBinInts?: boolean;
+
+  /**
    * Custom variable resolver function
    *
    * @param path The variable path being resolved

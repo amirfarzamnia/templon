@@ -56,3 +56,7 @@ compileTemplate(
 | autoStringifyObjects | boolean                   | true      | Automatically stringify objects to JSON    |
 | resolver             | (path: string) => any     | undefined | Custom variable resolver function          |
 | stringTransform      | (value: string) => string | (s) => s  | Transform function for final string output |
+
+## Supported browsers
+
+![Supported browsers](https://ci.testling.com/amirfarzamnia/templon.png)

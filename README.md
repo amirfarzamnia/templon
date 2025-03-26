@@ -54,5 +54,6 @@ compileTemplate(
 | strict               | boolean                   | false     | Throw errors when variables are missing    |
 | preserveUndefined    | boolean                   | false     | Preserve undefined variables in output     |
 | autoStringifyObjects | boolean                   | true      | Automatically stringify objects to JSON    |
+| parseStrings         | boolean                   | true      | Automatically parse strings in output      |
 | resolver             | (path: string) => any     | undefined | Custom variable resolver function          |
 | stringTransform      | (value: string) => string | (s) => s  | Transform function for final string output |

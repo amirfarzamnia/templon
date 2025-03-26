@@ -87,7 +87,15 @@ export function compileTemplate(
       });
     } while (changed && result.includes("{"));
 
-    return stringTransform(restoreEscapeSequences(result));
+    result = stringTransform(restoreEscapeSequences(result));
+
+    if (options.parseStrings) {
+      try {
+        result = JSON.parse(result);
+      } catch {}
+    }
+
+    return result;
   };
 
   const processValue = (value: any): any => {

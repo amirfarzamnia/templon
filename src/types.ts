@@ -25,6 +25,13 @@ export interface CompileTemplateOptions {
   autoStringifyObjects?: boolean;
 
   /**
+   * Automatically parse strings in output
+   *
+   * @default true
+   */
+  parseStrings?: boolean;
+
+  /**
    * Custom variable resolver function
    *
    * @param path The variable path being resolved

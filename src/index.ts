@@ -1,4 +1,4 @@
-import { CompileTemplateOptions, TemplateInput, TemplateOutput } from "./types";
+import { CompileTemplateOptions, TemplateInput } from "./types";
 import {
   processEscapeSequences,
   restoreEscapeSequences,
@@ -13,12 +13,12 @@ import {
  * - Strict mode validation
  * - Custom resolvers
  *
- * @template T - The type of the output. Default is `TemplateOutput`.
+ * @template T - The type of the template input which is also the output type
  * @example
  * compileTemplate("Hello {user.name}", { user: { name: "John" } });
  */
-export function compileTemplate<T = TemplateOutput>(
-  template: TemplateInput,
+export function compileTemplate<T extends TemplateInput>(
+  template: T,
   variables: Record<string, any> = {},
   options: CompileTemplateOptions = {}
 ): T {
@@ -138,4 +138,4 @@ export function compileTemplate<T = TemplateOutput>(
 }
 
 // Export types for consumers
-export type { CompileTemplateOptions, TemplateInput, TemplateOutput };
+export type { CompileTemplateOptions, TemplateInput };

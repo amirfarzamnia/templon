@@ -59,8 +59,3 @@ export interface CompileTemplateOptions {
  * Possible input types for templates
  */
 export type TemplateInput = string | object | any[];
-
-/**
- * Possible output types from compilation
- */
-export type TemplateOutput = string | number | boolean | object | any[];

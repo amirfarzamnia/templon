@@ -13,14 +13,15 @@ import {
  * - Strict mode validation
  * - Custom resolvers
  *
+ * @template T - The type of the output. Default is `TemplateOutput`.
  * @example
  * compileTemplate("Hello {user.name}", { user: { name: "John" } });
  */
-export function compileTemplate(
+export function compileTemplate<T = TemplateOutput>(
   template: TemplateInput,
   variables: Record<string, any> = {},
   options: CompileTemplateOptions = {}
-): TemplateOutput {
+): T {
   const {
     strict = false,
     preserveUndefined = false,

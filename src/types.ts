@@ -39,6 +39,14 @@ export interface CompileTemplateOptions {
   parseBinInts?: boolean;
 
   /**
+   * Maximum depth for nested variable resolution
+   * Prevents circular references and infinite loops
+   *
+   * @default 10
+   */
+  maxVariableDepth?: number;
+
+  /**
    * Custom variable resolver function
    *
    * @param path The variable path being resolved

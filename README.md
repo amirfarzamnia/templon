@@ -1,6 +1,6 @@
 # Templon
 
-Advanced template compiler with deep variable resolution, object processing, and strict validation.
+Advanced template compiler with deep variable resolution, object processing, and strict validation with circular reference protection.
 
 [![npm version](https://badge.fury.io/js/templon.svg)](https://www.npmjs.com/package/templon)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -15,6 +15,7 @@ Advanced template compiler with deep variable resolution, object processing, and
 - Support for escape sequences
 - Strict mode for validation
 - Custom resolvers and transformers
+- Circular reference protection with depth limiting
 - TypeScript support
 
 ## Installation
@@ -58,3 +59,4 @@ compileTemplate(
 | parseBinInts         | boolean                   | false     | Automatically parse BigInts in output      |
 | resolver             | (path: string) => any     | undefined | Custom variable resolver function          |
 | stringTransform      | (value: string) => string | (s) => s  | Transform function for final string output |
+| maxVariableDepth     | number                    | 10        | Maximum depth for variable resolution      |

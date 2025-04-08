@@ -12,6 +12,7 @@ import {
  * - Escape sequences
  * - Strict mode validation
  * - Custom resolvers
+ * - Circular reference protection
  *
  * @template T - The type of the template input which is also the output type
  * @example
@@ -28,11 +29,17 @@ export function compileTemplate<T extends TemplateInput>(
     autoStringifyObjects = true,
     parseStrings = true,
     parseBinInts = false,
+    maxVariableDepth = 10,
     resolver,
     stringTransform = (s) => s,
   } = options;
 
-  const resolveVariable = (path: string): any => {
+  const resolveVariable = (path: string, depth: number = 0): any => {
+    // Prevent infinite recursion
+    if (depth >= maxVariableDepth) {
+      return undefined;
+    }
+
     // Use custom resolver if provided
     if (resolver) {
       const result = resolver(path);
@@ -62,11 +69,20 @@ export function compileTemplate<T extends TemplateInput>(
 
     let changed: boolean;
 
+    let iterationCount = 0;
+
     do {
       changed = false;
 
+      iterationCount++;
+
+      // Prevent infinite processing loops
+      if (iterationCount > maxVariableDepth) {
+        break;
+      }
+
       result = result.replace(/{([^{}]+)}/g, (match: string, path: string) => {
-        const value = resolveVariable(path.trim());
+        const value = resolveVariable(path.trim(), iterationCount);
 
         if (value === undefined) {
           if (strict) {

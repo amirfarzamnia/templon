@@ -112,19 +112,49 @@ const result = compileTemplate(
 // Output: "Hello Custom User"
 ```
 
+### Custom Escape Character
+
+```typescript
+// Using backslash as escape character (default)
+const result1 = compileTemplate("Show literal \\{{variable}}", {
+  variable: "value",
+});
+// Output: "Show literal {{variable}}"
+
+// Using custom escape character
+const result2 = compileTemplate(
+  "Show literal #{{variable}}",
+  { variable: "value" },
+  { escapeCharacter: "#" }
+);
+// Output: "Show literal {{variable}}"
+
+// Using custom escape with custom variable pattern
+const result3 = compileTemplate(
+  "Show literal #<variable>",
+  { variable: "value" },
+  {
+    variablePattern: /<([^<>]+)>/g,
+    escapeCharacter: "#",
+  }
+);
+// Output: "Show literal <variable>"
+```
+
 ## Configuration Options
 
-| Option               | Type                      | Default         | Description                                |
-| -------------------- | ------------------------- | --------------- | ------------------------------------------ |
-| strict               | boolean                   | false           | Throw errors when variables are missing    |
-| preserveUndefined    | boolean                   | false           | Preserve undefined variables in output     |
-| autoStringifyObjects | boolean                   | true            | Automatically stringify objects to JSON    |
-| parseStrings         | boolean                   | true            | Automatically parse strings in output      |
-| parseBinInts         | boolean                   | false           | Automatically parse BigInts in output      |
-| resolver             | (path: string) => any     | undefined       | Custom variable resolver function          |
-| stringTransform      | (value: string) => string | (s) => s        | Transform function for final string output |
-| maxVariableDepth     | number                    | 10              | Maximum depth for variable resolution      |
-| variablePattern      | RegExp                    | /{{([^{}]+)}}/g | Custom regex pattern for variable matching |
+| Option               | Type                      | Default         | Description                                  |
+| -------------------- | ------------------------- | --------------- | -------------------------------------------- |
+| strict               | boolean                   | false           | Throw errors when variables are missing      |
+| preserveUndefined    | boolean                   | false           | Preserve undefined variables in output       |
+| autoStringifyObjects | boolean                   | true            | Automatically stringify objects to JSON      |
+| parseStrings         | boolean                   | true            | Automatically parse strings in output        |
+| parseBinInts         | boolean                   | false           | Automatically parse BigInts in output        |
+| resolver             | (path: string) => any     | undefined       | Custom variable resolver function            |
+| stringTransform      | (value: string) => string | (s) => s        | Transform function for final string output   |
+| maxVariableDepth     | number                    | 10              | Maximum depth for variable resolution        |
+| variablePattern      | RegExp                    | /{{([^{}]+)}}/g | Custom regex pattern for variable matching   |
+| escapeCharacter      | string                    | \\              | Character used to escape variable delimiters |
 
 ## Contributing
 

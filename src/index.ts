@@ -75,6 +75,7 @@ export function compileTemplate<T>(
     resolver,
     stringTransform = (s) => s,
     variablePattern = /{{([^{}]+)}}/g,
+    escapeCharacter = "\\",
   } = options;
 
   /**
@@ -112,7 +113,7 @@ export function compileTemplate<T>(
    * @returns The processed string with variables resolved
    */
   const processString = (str: string): string => {
-    let result = processEscapeSequences(str);
+    let result = processEscapeSequences(str, variablePattern, escapeCharacter);
     let changed: boolean;
     let iterationCount = 0;
 
@@ -150,7 +151,7 @@ export function compileTemplate<T>(
       );
     } while (changed && result.includes("{"));
 
-    result = stringTransform(restoreEscapeSequences(result));
+    result = stringTransform(restoreEscapeSequences(result, variablePattern));
 
     if (parseStrings) {
       try {

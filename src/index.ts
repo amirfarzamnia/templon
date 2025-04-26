@@ -4,6 +4,7 @@ import {
   restoreEscapeSequences,
   tryParseJson,
 } from "./utils";
+import { get } from "radash";
 
 /**
  * Compiles templates with advanced features:
@@ -51,19 +52,8 @@ export function compileTemplate<T extends TemplateInput>(
       }
     }
 
-    // Check direct property first for performance
-    if (Object.prototype.hasOwnProperty.call(variables, path)) {
-      return variables[path];
-    }
-
-    // Handle nested properties with dot notation
-    return path.split(".").reduce((obj: any, key: string) => {
-      if (obj && typeof obj === "object" && key in obj) {
-        return obj[key];
-      }
-
-      return undefined;
-    }, variables);
+    // Use radash get for deep property access
+    return get(variables, path);
   };
 
   const processString = (str: string): string => {

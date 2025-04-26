@@ -1,6 +1,7 @@
 src
 test
 coverage
+assets
 .*
 *.config.js
 *.md

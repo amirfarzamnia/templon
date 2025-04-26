@@ -1,69 +1,131 @@
 /**
- * Configuration options for template compilation
+ * Configuration options for template compilation.
+ * These options control how templates are processed and how variables are resolved.
  */
 export interface CompileTemplateOptions {
   /**
-   * Throw errors when variables are missing
+   * When enabled, throws an error if a variable referenced in the template is not found.
+   * This is useful for catching missing variables early in development.
+   *
+   * @example
+   * // Will throw error if 'name' is not provided
+   * compileTemplate("Hello {{name}}", {}, { strict: true });
    *
    * @default false
    */
   strict?: boolean;
 
   /**
-   * Preserve undefined variables in output
-   * When false, undefined variables are replaced with empty string
+   * Controls how undefined variables are handled in the output.
+   * When false, undefined variables are replaced with an empty string.
+   * When true, the original variable placeholder is preserved.
+   *
+   * @example
+   * // With preserveUndefined: false
+   * compileTemplate("Hello {{name}}", {})
+   * // Output: "Hello "
+   *
+   * // With preserveUndefined: true
+   * compileTemplate("Hello {{name}}", {}, { preserveUndefined: true })
+   * // Output: "Hello {{name}}"
    *
    * @default false
    */
   preserveUndefined?: boolean;
 
   /**
-   * Automatically stringify objects to JSON
+   * When enabled, objects and arrays are automatically converted to JSON strings.
+   * This is useful when you want to display complex data structures in the template.
+   *
+   * @example
+   * // With autoStringifyObjects: true
+   * compileTemplate("Data: {{data}}", { data: { foo: "bar" } })
+   * // Output: "Data: {"foo":"bar"}"
    *
    * @default true
    */
   autoStringifyObjects?: boolean;
 
   /**
-   * Automatically parse strings in output
+   * When enabled, attempts to parse string values as JSON.
+   * This is useful when you want to convert string representations of objects back to objects.
+   *
+   * @example
+   * // With parseStrings: true
+   * compileTemplate("{{json}}", { json: '{"foo":"bar"}' })
+   * // Output: { foo: "bar" }
    *
    * @default true
    */
   parseStrings?: boolean;
 
   /**
-   * Automatically parse BigInts in output
+   * When enabled, attempts to parse string values as BigInt.
+   * This is useful when working with large numbers that exceed JavaScript's Number.MAX_SAFE_INTEGER.
+   *
+   * @example
+   * // With parseBinInts: true
+   * compileTemplate("{{bigNum}}", { bigNum: "9007199254740993" })
+   * // Output: 9007199254740993n
    *
    * @default false
    */
   parseBinInts?: boolean;
 
   /**
-   * Maximum depth for nested variable resolution
-   * Prevents circular references and infinite loops
+   * Maximum depth for nested variable resolution.
+   * This prevents circular references and infinite loops in complex data structures.
+   *
+   * @example
+   * // With maxVariableDepth: 1
+   * compileTemplate("{{a.b.c}}", { a: { b: { c: "value" } } }, { maxVariableDepth: 1 })
+   * // Output: "" (c is at depth 2)
    *
    * @default 10
    */
   maxVariableDepth?: number;
 
   /**
-   * Custom variable resolver function
+   * Custom function to resolve variable values.
+   * This allows for custom logic when resolving template variables.
    *
-   * @param path The variable path being resolved
-   * @returns The resolved value or undefined
+   * @param path The variable path being resolved (e.g., "user.profile.name")
+   * @returns The resolved value or undefined if the variable should be handled by the default resolver
+   *
+   * @example
+   * compileTemplate("Hello {{user.name}}", {}, {
+   *   resolver: (path) => {
+   *     if (path === "user.name") return "Custom User";
+   *     return undefined;
+   *   }
+   * });
    */
   resolver?: (path: string) => any;
 
   /**
-   * Transform function for final string output
+   * Transform function applied to the final string output.
+   * This allows for custom string processing after all variables are resolved.
    *
    * @param value The processed string value
    * @returns The transformed string
+   *
+   * @example
+   * compileTemplate("Hello {{name}}", { name: "World" }, {
+   *   stringTransform: (s) => s.toUpperCase()
+   * });
+   * // Output: "HELLO WORLD"
    */
   stringTransform?: (value: string) => string;
 
   /**
-   * Custom regex pattern for variable matching
+   * Custom regular expression pattern for matching variables in the template.
+   * The pattern should have a capture group for the variable name.
+   *
+   * @example
+   * // Using custom pattern <variable>
+   * compileTemplate("Hello <name>", { name: "World" }, {
+   *   variablePattern: /<([^{}]+)>/g
+   * });
    *
    * @default /{{([^{}]+)}}/g
    */
@@ -71,6 +133,17 @@ export interface CompileTemplateOptions {
 }
 
 /**
- * Possible input types for templates
+ * Possible input types for templates.
+ * Templates can be strings, objects, or arrays.
+ *
+ * @example
+ * // String template
+ * compileTemplate("Hello {{name}}", { name: "World" });
+ *
+ * // Object template
+ * compileTemplate({ message: "Hello {{name}}" }, { name: "World" });
+ *
+ * // Array template
+ * compileTemplate(["Hello {{name}}", "Goodbye {{name}}"], { name: "World" });
  */
 export type TemplateInput = string | object | any[];

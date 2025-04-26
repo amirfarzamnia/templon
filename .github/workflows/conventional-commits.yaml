@@ -6,8 +6,7 @@ on:
       - main
 
 jobs:
-  build:
-    name: Conventional Commits
+  conventional-commits:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

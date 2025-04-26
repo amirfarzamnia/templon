@@ -23,7 +23,7 @@ export function compileTemplate<T extends TemplateInput>(
   template: T,
   variables: Record<string, any> = {},
   options: CompileTemplateOptions = {}
-): T {
+): T extends string ? string : T {
   const {
     strict = false,
     preserveUndefined = false,

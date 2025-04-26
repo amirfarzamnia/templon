@@ -4,7 +4,7 @@ Advanced template compiler with deep variable resolution, object processing, and
 
 <div align="center">
   <p align="center">
-    <img src="https://raw.githubusercontent.com/amirfarzamnia/templon/2944422df91f7d697674116d82bb47ab3d73b598/assets/templon.png" alt="Templon" width="100%" style="border-radius:0.5rem" />
+    <img src="https://raw.githubusercontent.com/amirfarzamnia/templon/refs/heads/master/assets/templon.png" alt="Templon" width="100%" style="border-radius:0.5rem" />
   </p>
 </div>
 

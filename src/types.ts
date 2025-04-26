@@ -61,6 +61,13 @@ export interface CompileTemplateOptions {
    * @returns The transformed string
    */
   stringTransform?: (value: string) => string;
+
+  /**
+   * Custom regex pattern for variable matching
+   *
+   * @default /{{([^{}]+)}}/g
+   */
+  variablePattern?: RegExp;
 }
 
 /**

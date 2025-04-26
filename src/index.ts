@@ -13,10 +13,11 @@ import {
  * - Strict mode validation
  * - Custom resolvers
  * - Circular reference protection
+ * - Customizable variable pattern
  *
  * @template T - The type of the template input which is also the output type
  * @example
- * compileTemplate("Hello {user.name}", { user: { name: "John" } });
+ * compileTemplate("Hello {{user.name}}", { user: { name: "John" } });
  */
 export function compileTemplate<T extends TemplateInput>(
   template: T,
@@ -32,6 +33,7 @@ export function compileTemplate<T extends TemplateInput>(
     maxVariableDepth = 10,
     resolver,
     stringTransform = (s) => s,
+    variablePattern = /{{([^{}]+)}}/g,
   } = options;
 
   const resolveVariable = (path: string, depth: number = 0): any => {
@@ -81,29 +83,32 @@ export function compileTemplate<T extends TemplateInput>(
         break;
       }
 
-      result = result.replace(/{([^{}]+)}/g, (match: string, path: string) => {
-        const value = resolveVariable(path.trim(), iterationCount);
+      result = result.replace(
+        variablePattern,
+        (match: string, path: string) => {
+          const value = resolveVariable(path.trim(), iterationCount);
 
-        if (value === undefined) {
-          if (strict) {
-            throw new Error(`Missing variable: ${path}`);
+          if (value === undefined) {
+            if (strict) {
+              throw new Error(`Missing variable: ${path}`);
+            }
+
+            return preserveUndefined ? match : "";
           }
 
-          return preserveUndefined ? match : "";
+          if (
+            autoStringifyObjects &&
+            typeof value === "object" &&
+            value !== null
+          ) {
+            return JSON.stringify(value);
+          }
+
+          changed = true;
+
+          return String(value);
         }
-
-        if (
-          autoStringifyObjects &&
-          typeof value === "object" &&
-          value !== null
-        ) {
-          return JSON.stringify(value);
-        }
-
-        changed = true;
-
-        return String(value);
-      });
+      );
     } while (changed && result.includes("{"));
 
     result = stringTransform(restoreEscapeSequences(result));

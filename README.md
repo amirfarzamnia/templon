@@ -17,6 +17,7 @@ Advanced template compiler with deep variable resolution, object processing, and
 - Custom resolvers and transformers
 - Circular reference protection with depth limiting
 - TypeScript support
+- Customizable variable pattern
 
 ## Installation
 
@@ -30,14 +31,14 @@ npm install templon
 import { compileTemplate } from "templon";
 
 // Basic string interpolation
-compileTemplate("Hello {name}", { name: "World" });
+compileTemplate("Hello {{name}}", { name: "World" });
 
 // Nested objects
-compileTemplate("Hello {user.name}", { user: { name: "John" } });
+compileTemplate("Hello {{user.name}}", { user: { name: "John" } });
 
 // With options
 compileTemplate(
-  "Hello {name}",
+  "Hello {{name}}",
   {
     name: "World",
   },
@@ -46,17 +47,25 @@ compileTemplate(
     autoStringifyObjects: false,
   }
 );
+
+// Custom variable pattern
+compileTemplate(
+  "Hello {name}",
+  { name: "World" },
+  { variablePattern: /{([^{}]+)}/g }
+);
 ```
 
 ## Options
 
-| Option               | Type                      | Default   | Description                                |
-| -------------------- | ------------------------- | --------- | ------------------------------------------ |
-| strict               | boolean                   | false     | Throw errors when variables are missing    |
-| preserveUndefined    | boolean                   | false     | Preserve undefined variables in output     |
-| autoStringifyObjects | boolean                   | true      | Automatically stringify objects to JSON    |
-| parseStrings         | boolean                   | true      | Automatically parse strings in output      |
-| parseBinInts         | boolean                   | false     | Automatically parse BigInts in output      |
-| resolver             | (path: string) => any     | undefined | Custom variable resolver function          |
-| stringTransform      | (value: string) => string | (s) => s  | Transform function for final string output |
-| maxVariableDepth     | number                    | 10        | Maximum depth for variable resolution      |
+| Option               | Type                      | Default         | Description                                |
+| -------------------- | ------------------------- | --------------- | ------------------------------------------ |
+| strict               | boolean                   | false           | Throw errors when variables are missing    |
+| preserveUndefined    | boolean                   | false           | Preserve undefined variables in output     |
+| autoStringifyObjects | boolean                   | true            | Automatically stringify objects to JSON    |
+| parseStrings         | boolean                   | true            | Automatically parse strings in output      |
+| parseBinInts         | boolean                   | false           | Automatically parse BigInts in output      |
+| resolver             | (path: string) => any     | undefined       | Custom variable resolver function          |
+| stringTransform      | (value: string) => string | (s) => s        | Transform function for final string output |
+| maxVariableDepth     | number                    | 10              | Maximum depth for variable resolution      |
+| variablePattern      | RegExp                    | /{{([^{}]+)}}/g | Custom regex pattern for variable matching |

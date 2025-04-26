@@ -4,4 +4,4 @@ coverage
 .*
 *.config.js
 *.md
-tsconfig.json
+tsconfig.*

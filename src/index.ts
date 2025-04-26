@@ -4,7 +4,7 @@ import {
   restoreEscapeSequences,
   tryParseJson,
 } from "./utils";
-import { get } from "radash";
+import { get, isNumber, isObject, isString } from "radash";
 
 /**
  * Compiles templates with advanced features:
@@ -86,11 +86,7 @@ export function compileTemplate<T extends TemplateInput>(
             return preserveUndefined ? match : "";
           }
 
-          if (
-            autoStringifyObjects &&
-            typeof value === "object" &&
-            value !== null
-          ) {
+          if (autoStringifyObjects && isObject(value)) {
             return JSON.stringify(value);
           }
 
@@ -105,14 +101,14 @@ export function compileTemplate<T extends TemplateInput>(
 
     if (parseStrings) {
       try {
-        const parsed = JSON.parse(result);
+        const parsedResult = JSON.parse(result);
 
         if (
-          typeof parsed !== "number" ||
-          Number.isSafeInteger(parsed) ||
+          !isNumber(parsedResult) ||
+          Number.isSafeInteger(parsedResult) ||
           parseBinInts
         ) {
-          result = parsed;
+          result = parsedResult;
         }
       } catch {}
     }
@@ -121,7 +117,7 @@ export function compileTemplate<T extends TemplateInput>(
   };
 
   const processValue = (value: any): any => {
-    if (typeof value === "string") {
+    if (isString(value)) {
       const processed = processString(value);
 
       return tryParseJson(processed);
@@ -131,7 +127,7 @@ export function compileTemplate<T extends TemplateInput>(
       return value.map(processValue);
     }
 
-    if (value && typeof value === "object") {
+    if (isObject(value)) {
       return Object.entries(value).reduce(
         (acc: Record<string, any>, [key, val]) => {
           acc[key] = processValue(val);

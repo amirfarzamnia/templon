@@ -1,6 +1,6 @@
-import { compileTemplate } from "./index";
+import { compileTemplate } from "../src/index";
 
-describe("compileTemplate", () => {
+describe("Basic compileTemplate tests", () => {
   it("should compile simple templates", () => {
     expect(compileTemplate("Hello {{name}}", { name: "World" })).toBe(
       "Hello World"

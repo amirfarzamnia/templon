@@ -131,19 +131,3 @@ export interface CompileTemplateOptions {
    */
   variablePattern?: RegExp;
 }
-
-/**
- * Possible input types for templates.
- * Templates can be strings, objects, or arrays.
- *
- * @example
- * // String template
- * compileTemplate("Hello {{name}}", { name: "World" });
- *
- * // Object template
- * compileTemplate({ message: "Hello {{name}}" }, { name: "World" });
- *
- * // Array template
- * compileTemplate(["Hello {{name}}", "Goodbye {{name}}"], { name: "World" });
- */
-export type TemplateInput = string | object | any[];

@@ -1,4 +1,4 @@
-import { CompileTemplateOptions, TemplateInput } from "./types";
+import { CompileTemplateOptions } from "./types";
 import {
   processEscapeSequences,
   restoreEscapeSequences,
@@ -60,7 +60,7 @@ import { get, isNumber, isObject, isString } from "radash";
  * );
  * // Output: "Hello World"
  */
-export function compileTemplate<T extends TemplateInput>(
+export function compileTemplate<T>(
   template: T,
   variables: Record<string, any> = {},
   options: CompileTemplateOptions = {}
@@ -205,4 +205,4 @@ export function compileTemplate<T extends TemplateInput>(
 }
 
 // Export types for consumers
-export type { CompileTemplateOptions, TemplateInput };
+export type { CompileTemplateOptions };

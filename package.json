@@ -49,6 +49,7 @@
     "url": "git+https://github.com/amirfarzamnia/templon.git"
   },
   "dependencies": {
-    "radash": "^12.1.0"
+    "radash": "^12.1.0",
+    "secure-json-parse": "^4.0.0"
   }
 }

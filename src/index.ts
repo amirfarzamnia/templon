@@ -5,6 +5,7 @@ import {
   tryParseJson,
 } from "./utils";
 import { get, isNumber, isObject, isString } from "radash";
+import sjson from "secure-json-parse";
 
 /**
  * Compiles templates with advanced features for variable resolution and processing.
@@ -155,7 +156,7 @@ export function compileTemplate<T>(
 
     if (parseStrings) {
       try {
-        const parsedResult = JSON.parse(result);
+        const parsedResult = sjson(result);
 
         if (
           !isNumber(parsedResult) ||

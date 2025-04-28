@@ -1,3 +1,5 @@
+import sjson from "secure-json-parse";
+
 /**
  * Marker characters used internally to temporarily replace escaped sequences.
  * These special Unicode characters are unlikely to appear in normal text.
@@ -109,6 +111,11 @@ export const restoreEscapeSequences = (
  * This is used to automatically convert string representations of objects/arrays back to their
  * original form after template processing.
  *
+ * This function is secure against prototype pollution and other JSON-based attacks because it:
+ * 1. Only parses strings that are explicitly objects or arrays (starting/ending with {}/[])
+ * 2. Uses a secure JSON parsing library that prevents prototype pollution
+ * 3. Returns the original string if parsing fails, preventing injection attacks
+ *
  * @param str - The string to attempt parsing
  * @returns The parsed JSON object/array if successful, or the original string if parsing fails
  *
@@ -127,7 +134,7 @@ export const tryParseJson = (str: string): any => {
       (trimmed.startsWith("{") && trimmed.endsWith("}")) ||
       (trimmed.startsWith("[") && trimmed.endsWith("]"))
     ) {
-      return JSON.parse(trimmed);
+      return sjson(trimmed);
     }
   } catch {}
 

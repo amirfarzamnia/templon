@@ -1,9 +1,5 @@
 import { CompileTemplateOptions } from "./types";
-import {
-  processEscapeSequences,
-  restoreEscapeSequences,
-  tryParseJson,
-} from "./utils";
+import { tryParseJson } from "./utils";
 import { get, isArray, isNumber, isObject, isString } from "radash";
 import sjson from "secure-json-parse";
 
@@ -17,7 +13,6 @@ import sjson from "secure-json-parse";
  * Key Features:
  * - Deep variable resolution using dot notation (e.g., {{user.profile.name}})
  * - Automatic object/array processing and JSON stringification
- * - Support for escape sequences in templates
  * - Strict mode for validation of required variables
  * - Custom resolvers for complex variable resolution logic
  * - Circular reference protection with configurable depth limiting
@@ -76,7 +71,6 @@ export function compileTemplate<T>(
     resolver,
     stringTransform = (s) => s,
     variablePattern = /{{([^{}]+)}}/g,
-    escapeCharacter = "\\",
   } = options;
 
   /**
@@ -108,13 +102,13 @@ export function compileTemplate<T>(
 
   /**
    * Processes a string template by replacing variables with their values.
-   * Handles escape sequences, object stringification, and strict mode validation.
+   * Handles object stringification and strict mode validation.
    *
    * @param str - The string template to process
    * @returns The processed string with variables resolved
    */
   const processString = (str: string): string => {
-    let result = processEscapeSequences(str, variablePattern, escapeCharacter);
+    let result = str;
     let changed: boolean;
     let iterationCount = 0;
 
@@ -152,7 +146,7 @@ export function compileTemplate<T>(
       );
     } while (changed && result.includes("{"));
 
-    result = stringTransform(restoreEscapeSequences(result, variablePattern));
+    result = stringTransform(result);
 
     if (parseStrings) {
       try {

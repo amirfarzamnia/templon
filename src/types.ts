@@ -130,22 +130,4 @@ export interface CompileTemplateOptions {
    * @default /{{([^{}]+)}}/g
    */
   variablePattern?: RegExp;
-
-  /**
-   * Character used to escape variable delimiters.
-   * When a variable delimiter is preceded by this character, it will be treated as a literal character
-   * rather than a variable marker. The escape character itself will be removed from the output.
-   *
-   * @example
-   * // With escapeCharacter: '\'
-   * compileTemplate("Hello \\{{name}}", { name: "World" })
-   * // Output: "Hello {{name}}"
-   *
-   * // With escapeCharacter: '#'
-   * compileTemplate("Hello #{{name}}", { name: "World" }, { escapeCharacter: '#' })
-   * // Output: "Hello {{name}}"
-   *
-   * @default '\\'
-   */
-  escapeCharacter?: string;
 }

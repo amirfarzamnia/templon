@@ -4,7 +4,7 @@ import {
   restoreEscapeSequences,
   tryParseJson,
 } from "./utils";
-import { get, isNumber, isObject, isString } from "radash";
+import { get, isArray, isNumber, isObject, isString } from "radash";
 import sjson from "secure-json-parse";
 
 /**
@@ -185,7 +185,7 @@ export function compileTemplate<T>(
       return tryParseJson(processed);
     }
 
-    if (Array.isArray(value)) {
+    if (isArray(value)) {
       return value.map(processValue);
     }
 

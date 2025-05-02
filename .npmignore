@@ -3,6 +3,7 @@ test
 coverage
 assets
 .*
-*.config.js
+*.config.*
 *.md
 tsconfig.*
+docs

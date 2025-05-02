@@ -10,7 +10,7 @@
     "test:watch": "jest --watch",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "prepublishOnly": "npm run build && npm test"
+    "prepublishOnly": "pnpm build && pnpm test"
   },
   "keywords": [
     "template",
@@ -40,7 +40,7 @@
   "files": [
     "dist/**/*"
   ],
-  "homepage": "https://github.com/amirfarzamnia/templon",
+  "homepage": "https://amirfarzamnia.github.io/templon",
   "bugs": {
     "url": "https://github.com/amirfarzamnia/templon/issues"
   },

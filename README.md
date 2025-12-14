@@ -2,12 +2,6 @@
 
 Advanced template compiler with deep variable resolution, object processing, and strict validation with circular reference protection.
 
-<div align="center">
-  <p align="center">
-    <img src="https://raw.githubusercontent.com/amirfarzamnia/templon/refs/heads/main/assets/templon.png" alt="Templon" width="100%" style="border-radius:0.5rem" />
-  </p>
-</div>
-
 [![npm version](https://badge.fury.io/js/templon.svg)](https://www.npmjs.com/package/templon)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![GitHub issues](https://img.shields.io/github/issues/amirfarzamnia/templon.svg)](https://github.com/amirfarzamnia/templon/issues)
@@ -138,3 +132,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
